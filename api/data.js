@@ -20,5 +20,5 @@ exports.SERIES = {
 }
 exports.CHANNELS = [
   { id: 301, name: 'Test Channel 1 (HLS demo)', url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8' },
-  { id: 302, name: 'Test Channel 2 (Apple HLS sample)', url: 'https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_ts/master.m3u8' }
+  { id: 302, name: 'Test Channel 2 (HLS demo, low bitrate)', url: 'https://test-streams.mux.dev/test_001/stream.m3u8' }
 ]
