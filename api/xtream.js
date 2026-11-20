@@ -4,6 +4,22 @@ const CORS = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers
 const json = (res, obj, code = 200) => { res.writeHead(code, { 'Content-Type': 'application/json', ...CORS }); res.end(JSON.stringify(obj)) }
 const now = String(Math.floor(Date.now() / 1000))
 
+async function servePlaylist(url, res) {
+  try {
+    const r = await fetch(url, { redirect: 'follow' })
+    if (!r.ok) throw new Error('upstream ' + r.status)
+    const base = r.url || url
+    const text = await r.text()
+    const abs = (u) => { try { return new URL(u, base).href } catch (e) { return u } }
+    const out = text.split(/\r?\n/).map((line) => {
+      if (!line.trim()) return line
+      if (line[0] !== '#') return abs(line.trim())
+      return line.replace(/URI="([^"]+)"/g, (m, u) => 'URI="' + abs(u) + '"')
+    }).join('\n')
+    res.writeHead(200, { 'Content-Type': 'application/vnd.apple.mpegurl', 'Cache-Control': 'no-store', ...CORS }); res.end(out)
+  } catch (e) { res.writeHead(502, CORS); res.end('Upstream error') }
+}
+
 module.exports = (req, res) => {
   if (req.method === 'OPTIONS') { res.writeHead(204, CORS); res.end(); return }
   const q = new URL(req.url, 'http://x').searchParams
@@ -20,6 +36,7 @@ module.exports = (req, res) => {
     else if (kind === 'live') { const c = D.CHANNELS.find((v) => v.id === id); url = c && c.url }
     else for (const s of Object.keys(D.SERIES.seasons)) { const e = D.SERIES.seasons[s].find((v) => v.id === id); if (e) url = e.url }
     if (!url) { res.writeHead(404, CORS); res.end('Not found'); return }
+    if (kind === 'live') return servePlaylist(url, res)   // HLS: serve the playlist ourselves with full addresses (a redirect would make some players look for the segments on this server)
     res.writeHead(302, { Location: url, ...CORS }); res.end(); return
   }
   const a = q.get('action')
