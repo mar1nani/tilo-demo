@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    { "source": "/player_api.php", "destination": "/api/xtream?x=api" },
+    { "source": "/get.php", "destination": "/api/xtream?x=api" },
+    { "source": "/movie/:u/:p/:f", "destination": "/api/xtream?x=stream&kind=movie&u=:u&p=:p&f=:f" },
+    { "source": "/series/:u/:p/:f", "destination": "/api/xtream?x=stream&kind=series&u=:u&p=:p&f=:f" },
+    { "source": "/live/:u/:p/:f", "destination": "/api/xtream?x=stream&kind=live&u=:u&p=:p&f=:f" }
+  ]
+}

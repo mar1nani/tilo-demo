@@ -1,0 +1,1 @@
+{ "name": "tilo-demo", "version": "1.0.0", "private": true, "description": "Free demo playlist (open-licence films) for testing Tilo Player. Xtream-style API.", "engines": { "node": ">=18" } }
