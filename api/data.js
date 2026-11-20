@@ -19,6 +19,5 @@ exports.SERIES = {
   seasons: { 1: [{ id: 2011, title: 'Big Buck Bunny', url: BBB }, { id: 2012, title: 'Elephants Dream', url: ED }], 2: [{ id: 2021, title: 'Sintel', url: SINTEL }] }
 }
 exports.CHANNELS = [
-  { id: 301, name: 'Test Channel 1 (HLS demo)', url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8' },
-  { id: 302, name: 'Test Channel 2 (HLS demo, low bitrate)', url: 'https://test-streams.mux.dev/test_001/stream.m3u8' }
+  { id: 301, name: 'Test Channel 1 (HLS demo)', url: 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8' }
 ]
